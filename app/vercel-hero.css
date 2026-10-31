@@ -489,7 +489,11 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
 .tri-stage.cg-off .tri-shade,
 .tri-stage.cg-off .tri-glow{opacity:0 !important}
 html[data-theme="light"] .tri-stage.cg-off .tri{filter:none}
-html[data-theme="dark"] .tri-stage.cg-off .tri{filter:drop-shadow(0 0 1px rgba(255,255,255,.55))}
+/* OFF in dark = glow OFF but the logo stays visible: crisp bright white edge, no bloom, no breathing */
+html[data-theme="dark"] .tri-stage.cg-off .tri-wrap::before,
+html[data-theme="dark"] .tri-stage.cg-off .tri-wrap::after{opacity:0 !important;animation:none !important}
+html[data-theme="dark"] .tri-stage.cg-off .tri{filter:drop-shadow(0 0 1px rgba(255,255,255,.9)) drop-shadow(0 0 1px rgba(255,255,255,.9))}
+html[data-theme="dark"] .tri-stage.cg-off .tri polygon{stroke:rgba(255,255,255,.95);stroke-width:2px;stroke-linejoin:miter;vector-effect:non-scaling-stroke}
 
 /* ADDED: dark mode white light also flows on hover - a bright white wave runs around the rim */
 html[data-theme="dark"] .tri-stage.flowing:not(.prism-on):not(.cg-off) .tri-shade{opacity:1;filter:blur(10px)}
