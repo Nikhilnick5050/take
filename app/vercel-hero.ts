@@ -16,7 +16,7 @@ export function initPage() {
   document.getElementById('themeToggle').addEventListener('click', function(){
     var st = document.getElementById('triStage');
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    if (st) { st.classList.remove('prism-on'); st.classList.remove('cg-off'); }   // dark mode always opens with the white glow
+    if (st) { st.classList.remove('prism-on'); st.classList.remove('cg-off'); }   // every theme switch starts with the light ON
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('vercel-clone-theme', next); } catch(e){}
   });
@@ -101,10 +101,16 @@ export function initPage() {
   var stage = document.getElementById('triStage');
   if (!stage) return;
   var toggle = function(){
-    // Both themes, ONE click each time: light <-> rainbow.
-    // The light is never hidden (no 'off' state), so the logo never goes blank.
-    stage.classList.remove('cg-off');
-    stage.classList.toggle('prism-on');
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (!dark) {                                   // LIGHT MODE: 1 click = rainbow on / off
+      stage.classList.remove('cg-off');
+      stage.classList.toggle('prism-on');
+      return;
+    }
+    // DARK MODE: light -> rainbow -> off -> light
+    if (stage.classList.contains('cg-off')) { stage.classList.remove('cg-off'); }            // off -> light
+    else if (!stage.classList.contains('prism-on')) { stage.classList.add('prism-on'); }     // light -> rainbow
+    else { stage.classList.remove('prism-on'); stage.classList.add('cg-off'); }              // rainbow -> off
   };
   // only the black triangle itself is the trigger
   var poly = stage.querySelector('.tri polygon');
