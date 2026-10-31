@@ -283,8 +283,9 @@ html[data-theme="dark"] .tri-wrap::after{
 }
 html[data-theme="dark"] .tri-wrap::before{transform:translate(-2px,-4px) scale(1.035);filter:blur(5px)}
 html[data-theme="dark"] .tri-wrap::after{transform:translate(-6px,-14px) scale(1.12,1.18);filter:blur(26px)}
-html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::before{opacity:0}
-html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::after{opacity:0}
+/* DEFAULT dark state = white light ON (page open, and after every rainbow -> light click). There is no off state. */
+html[data-theme="dark"] .tri-stage:not(.prism-on) .tri-wrap::before{opacity:.95;animation:rimBreath 5s ease-in-out infinite}
+html[data-theme="dark"] .tri-stage:not(.prism-on) .tri-wrap::after{opacity:.45;animation:bloomBreath 6.5s ease-in-out infinite}
 @keyframes rimBreath{0%,100%{opacity:.95}50%{opacity:.78}}
 @keyframes bloomBreath{0%,100%{opacity:.45}50%{opacity:.32}}
 /* rainbow rim: a triangle-shaped colour layer, a bit bigger than the logo,
@@ -484,21 +485,8 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
   *{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
 
-/* ===== ADDED (nothing above changed): OFF state of the 3-click cycle ===== */
-.tri-stage.cg-off .tri-prism,
-.tri-stage.cg-off .tri-shade,
-.tri-stage.cg-off .tri-glow{opacity:0 !important}
-html[data-theme="light"] .tri-stage.cg-off .tri{filter:none}
-/* OFF in dark = glow OFF but the logo stays visible: crisp bright white edge, no bloom, no breathing */
-html[data-theme="dark"] .tri-stage.cg-off .tri-wrap::before,
-html[data-theme="dark"] .tri-stage.cg-off .tri-wrap::after{opacity:0 !important;animation:none !important}
-/* OFF = no light at all: no glow, no white edge light. Only a faint grey
-   outline so the black triangle is still visible on the black page. */
-html[data-theme="dark"] .tri-stage.cg-off .tri{filter:none !important}
-html[data-theme="dark"] .tri-stage.cg-off .tri polygon{stroke:rgba(255,255,255,.22);stroke-width:1px;stroke-linejoin:miter;vector-effect:non-scaling-stroke}
-
 /* ADDED: dark mode white light also flows on hover - a bright white wave runs around the rim */
-html[data-theme="dark"] .tri-stage.flowing:not(.prism-on):not(.cg-off) .tri-shade{opacity:1;filter:blur(10px)}
+html[data-theme="dark"] .tri-stage.flowing:not(.prism-on) .tri-shade{opacity:1;filter:blur(10px)}
 /* FIX: keep the rim WHITE whenever the rainbow is not switched on, so the 1s fade-out
    after hover never shows the rainbow gradient (that was the "rainbow flash" without a click) */
 html[data-theme="dark"] .tri-stage:not(.prism-on) .tri-shade::before{

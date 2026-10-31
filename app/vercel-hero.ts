@@ -16,7 +16,7 @@ export function initPage() {
   document.getElementById('themeToggle').addEventListener('click', function(){
     var st = document.getElementById('triStage');
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    if (st) { st.classList.remove('prism-on'); st.classList.remove('cg-off'); }   // every theme switch starts with the light ON
+    if (st) { st.classList.remove('prism-on'); }   // every theme switch starts with the white light ON
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('vercel-clone-theme', next); } catch(e){}
   });
@@ -92,12 +92,10 @@ export function initPage() {
   var toggle = function(){
     var dark = document.documentElement.getAttribute('data-theme') === 'dark';
     if (!dark) {                                   // LIGHT MODE: 1 click = rainbow on / off
-      stage.classList.remove('cg-off');
       stage.classList.toggle('prism-on');
       return;
     }
-    // DARK MODE: light <-> rainbow on every click (no off state; the light never goes out)
-    stage.classList.remove('cg-off');
+    // DARK MODE: white light <-> rainbow on every click. There is NO off state: the light never goes out.
     stage.classList.toggle('prism-on');
   };
   // only the black triangle itself is the trigger
