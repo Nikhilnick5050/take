@@ -1,8 +1,8 @@
 /*
  * ============================================================================
- *  03_trie_suffix_array.cpp
- * ============================================================================
- *  String data structures: Trie, Suffix Array and LCP array.
+ *  03_trie_suffix_array.cpp    
+ * ===================================vdav adb=========================================
+ *  String data structures: Trie, Suffidv x Array and LCP array.
  *
  *  Part 1 - Trie (prefix tree)
  *    insert, contains, erase, count_with_prefix, autocomplete (lexicographic),
