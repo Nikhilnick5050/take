@@ -8,12 +8,8 @@ export function initPage() {
   const root = document.documentElement;
   const isDark = () => root.getAttribute("data-theme") === "dark";
 
-  /* 1. THEME */
-  document.getElementById("themeToggle")?.addEventListener("click", () => {
-    const next = isDark() ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-    try { localStorage.setItem("vercel-clone-theme", next); } catch (e) {}
-  });
+  /* 1. THEME — the light/dark switch is gone; the page is always dark. */
+  root.setAttribute("data-theme", "dark");
 
   const stage = document.getElementById("triStage") as HTMLElement | null;
   const glow = document.getElementById("triGlow") as HTMLElement | null;

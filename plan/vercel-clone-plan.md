@@ -52,3 +52,18 @@ Triangle is absolutely centred in the row (not a grid column).
 3. The real hero glow is a WebGL shader; this is a 2D canvas gradient.
 4. No drag-and-drop "Drop to deploy" widget (needs their backend).
 5. Section 2 is a simplified stand-in, not the real Zapier/Global Delivery blocks.
+
+## Hero right column — hover rows (added 31 Oct 2026)
+Measured live on vercel.com (dark and light theme, 1280px wide):
+
+| State | Row height | Heading colour | Description |
+|---|---|---|---|
+| Idle | 24px | `#ededed` dark / `#171717` light | opacity 0 |
+| Hovered | 84px | full colour | opacity 1, `#a1a1a1` dark / `#4d4d4d` light |
+| Other rows while one is hovered | 24px | dimmed to `#a1a1a1` / `#4d4d4d` | opacity 0 |
+
+- Height animates 0.2s `cubic-bezier(0,0,.2,1)`; description opacity 0.5s in, 0.3s out.
+- Implemented with `animate()` from framer-motion in `app/vercel-hero.ts` (section 4).
+- Markup: `.hr-row[data-hr] > .hr-line > .hr-head + .hr-desc` in `app/markup.ts`.
+- The three descriptions are the real vercel.com copy (API/CLI/MCP/Skills, Sandboxed VMs, autonomous PRs).
+- Mobile (<=900px): column stays centred, rows still expand on tap/hover.

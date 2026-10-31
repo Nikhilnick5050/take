@@ -73,7 +73,7 @@ html[data-theme="dark"]{
   --glow-size:900px;
 }
 
-html,body{height:100%}
+html,body{min-height:100%}
 body{
   background:var(--bg);
   color:var(--fg);
@@ -497,13 +497,6 @@ html[data-theme="dark"] .vf-badge{background:#262626}
   text-transform:uppercase;color:#0070f3;
 }
 .vf-bar-right{display:flex;align-items:center;gap:4px;margin-left:auto}
-.vf-theme{display:inline-flex;align-items:center;gap:0;padding:2px;border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
-html[data-theme="light"] .vf-theme{box-shadow:0 0 0 1px rgba(0,0,0,.12)}
-.vf-tbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;border-radius:999px;background:transparent;color:#8f8f8f;cursor:pointer;transition:color .15s ease,box-shadow .15s ease}
-.vf-tbtn:hover{color:var(--fg)}
-.vf-tbtn svg{width:16px;height:16px;display:block}
-.vf-tbtn.on{color:var(--fg);box-shadow:0 0 0 1px rgba(255,255,255,.22)}
-html[data-theme="light"] .vf-tbtn.on{box-shadow:0 0 0 1px rgba(0,0,0,.2)}
 .vf-agent{
   display:inline-flex;align-items:center;justify-content:center;
   width:24px;height:24px;padding:0;margin-left:4px;
