@@ -220,6 +220,7 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
   pointer-events:none;
   will-change:transform;
   transform:translate3d(0,0,0);
+  transition:opacity .7s linear;
 }
 .tri-glow canvas{width:100%;height:100%;display:block}
 .tri-wrap{
@@ -233,10 +234,68 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
 }
 .tri{
   width:100%;height:100%;display:block;overflow:visible;
-  transition:transform .5s cubic-bezier(.22,1,.36,1);
+  transform:none !important;
 }
-.tri polygon{fill:var(--tri);transition:fill .4s ease}
-.tri-stage:hover .tri{transform:scale(1.035)}
+.tri polygon{fill:var(--tri);transition:fill .4s ease;pointer-events:auto}
+.tri{pointer-events:none}
+
+/* ---------- LIGHT MODE (recorded on vercel.com, light theme, 1280x900) ----------
+   IDLE  : no colour. Two soft grey shadows in the same direction, pixel-fitted
+           (RMSE 2 grey levels): wide 20.5px / blur 22 / 23%, contact 7.3px /
+           blur 5.5 / 39%. The light slowly orbits (~0.6px/s); the cursor does
+           NOT move it and hover does NOT scale anything.
+   CLICK : a pastel rainbow ellipse (618x474 visible) fades in ~1s around the
+           triangle; colours sampled every 15deg; they do not rotate. Click
+           again fades it out. Shadows give way to the rainbow.             */
+.tri .sh,.tri .rim{pointer-events:none;transition:opacity .7s linear}
+.tri .sh{fill:#000}
+.tri .sh-wide{fill-opacity:.227}
+.tri .sh-contact{fill-opacity:.39}
+.tri .sh-edge{fill-opacity:.5}
+.tri .rim{fill:none;stroke:#fff;stroke-width:3;stroke-opacity:.9}
+html[data-theme="dark"] .tri .sh,html[data-theme="dark"] .tri .rim{opacity:0}
+.tri-prism{
+  position:absolute;left:50%;top:50%;pointer-events:none;z-index:-1;
+  width:1100px;height:848px;
+  margin:-437px 0 0 -554px;           /* ellipse centre = triangle centre +12,-26 (measured) */
+  background:conic-gradient(from 0deg at calc(50% - 20px) calc(50% + 26px),
+    rgb(236,188,255) 0deg,
+    rgb(174,198,255) 15deg,
+    rgb(161,205,255) 30deg,
+    rgb(163,209,255) 45deg,
+    rgb(169,212,255) 60deg,
+    rgb(168,212,255) 75deg,
+    rgb(163,214,255) 90deg,
+    rgb(149,222,255) 105deg,
+    rgb(135,254,255) 120deg,
+    rgb(160,255,255) 135deg,
+    rgb(192,255,215) 150deg,
+    rgb(205,255,208) 165deg,
+    rgb(209,255,208) 180deg,
+    rgb(207,255,205) 195deg,
+    rgb(211,255,198) 210deg,
+    rgb(242,255,184) 225deg,
+    rgb(255,241,173) 240deg,
+    rgb(255,195,182) 255deg,
+    rgb(255,185,190) 270deg,
+    rgb(255,186,194) 285deg,
+    rgb(255,186,195) 300deg,
+    rgb(255,183,194) 315deg,
+    rgb(255,182,204) 330deg,
+    rgb(255,181,245) 345deg,
+    rgb(236,188,255) 360deg);
+  -webkit-mask:radial-gradient(ellipse 50% 50% at 50% 50%,#000 0%,#000 22.7%,rgba(0,0,0,.74) 29%,rgba(0,0,0,.53) 36%,rgba(0,0,0,.34) 45%,rgba(0,0,0,.28) 55%,rgba(0,0,0,.2) 64%,rgba(0,0,0,.12) 73%,rgba(0,0,0,.06) 82%,rgba(0,0,0,.02) 91%,transparent 100%);
+          mask:radial-gradient(ellipse 50% 50% at 50% 50%,#000 0%,#000 22.7%,rgba(0,0,0,.74) 29%,rgba(0,0,0,.53) 36%,rgba(0,0,0,.34) 45%,rgba(0,0,0,.28) 55%,rgba(0,0,0,.2) 64%,rgba(0,0,0,.12) 73%,rgba(0,0,0,.06) 82%,rgba(0,0,0,.02) 91%,transparent 100%);
+  filter:blur(3px);
+  opacity:0;
+  transition:opacity .6s cubic-bezier(.4,0,.2,1);
+}
+.tri-stage.prism-on .tri-prism{opacity:1;transition:opacity 1s cubic-bezier(.22,1,.36,1)}
+.tri-stage.prism-on .tri .sh,.tri-stage.prism-on .tri .rim{opacity:0}
+.hero-left,.hero-right{position:relative;z-index:2}
+/* dark mode: no rainbow; clicking toggles the white glow instead */
+html[data-theme="dark"] .tri-prism{display:none !important}
+.tri-stage.glow-off .tri-glow{opacity:0}
 
 /* right nav: 364 wide at x=892, items at x=900, 16/24, weight 450 */
 .hero-right{
@@ -267,7 +326,7 @@ html[data-theme="dark"] .theme-toggle .moon{display:block}
   gap:16px;
   overflow:visible;
 }
-.logos svg{display:block;color:var(--fg);opacity:.92;transition:opacity var(--dur) var(--ease),color .4s ease}
+.logos svg{display:block;color:var(--fg);opacity:1;transition:opacity var(--dur) var(--ease),color .4s ease}
 .logos svg:hover{opacity:1}
 .logos .lg-meta{width:88px;height:18px}
 .logos .lg-doordash{width:147px;height:17px}
@@ -426,10 +485,21 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
     </div>
 
     <div class="tri-stage" id="triStage">
+      <div class="tri-prism" aria-hidden="true"></div>
       <div class="tri-glow" id="triGlow"><canvas id="glowCanvas"></canvas></div>
       <div class="tri-wrap anim-tri" id="triWrap">
         <svg class="tri" viewBox="0 0 222 222" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vercel triangle">
-          <polygon points="111,0 207,166 15,166" />
+          <defs>
+            <filter id="blurWide" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="22"/></filter>
+            <filter id="blurContact" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="5.5"/></filter>
+            <filter id="blurEdge" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="1.6"/></filter>
+            <filter id="blurRim" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="1.5"/></filter>
+          </defs>
+          <polygon class="sh sh-wide" id="shWide" filter="url(#blurWide)" points="111,0 207,166 15,166" />
+          <polygon class="sh sh-contact" id="shContact" filter="url(#blurContact)" points="111,0 207,166 15,166" />
+          <polygon class="sh sh-edge" id="shEdge" filter="url(#blurEdge)" points="111,0 207,166 15,166" />
+          <polygon class="rim" filter="url(#blurRim)" points="111,0 207,166 15,166" />
+          <polygon class="body" points="111,0 207,166 15,166" />
         </svg>
       </div>
     </div>
@@ -452,9 +522,7 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
     <svg class="lg-openai" viewBox="0 0 78 21" fill="currentColor" aria-label="OpenAI">
       <text x="0" y="16" font-family="Geist,Helvetica,Arial,sans-serif" font-size="18" font-weight="600" letter-spacing="-.6">OpenAI</text>
     </svg>
-    <svg class="lg-spacex" viewBox="0 0 132 16" fill="currentColor" aria-label="SpaceXAI">
-      <text x="0" y="12" font-family="Geist,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" letter-spacing="3.2">SPACEXAI</text>
-    </svg>
+    <svg class="lg-spacex" viewBox="0 0 397 48" aria-label="SpaceXAI"><path fill="currentColor" d="M91.33 17.62c6.66 0 10.840 2.8 10.84 7.78v3.34c0 5.3-3.6 7.6-10.27 7.6H68.01V48h-9.16V17.62zM395 .01v.04C380.51 1.23 323.590 8.3 284.11 48h-14.65l1.64-1.63C279.36 38.38 315.9 4.53 395 0M152.37 47.99h-10.92l-4.83-6.65h-28.25l4.85-5.18h19.63l-9.44-12.97 5.57-6.86zm42.72-30.37c4.88 0 8.35 1.69 9.24 5.3h-34.36v19.37h34.36c-.98 4.01-3.07 5.7-8.98 5.7h-26c-4.49 0-8.71-1.82-8.71-6.67V24.3c0-4.85 4.22-6.67 8.71-6.67zm49.66 15.4h-18.48v9.27h31.68v5.7h-41V27.82h27.8zM325.86 48h-14.5l-12.89-9.390c2.38-1.86 4.9-3.72 7.33-5.4zM36.36 17.62c5.06 0 7.95 2.5 8.83 5.3H11.33v6.54h26.26v-.01c5.3.3 8.5 2.57 8.5 6.84v4.85c0 4.72-2.8 6.85-8.4 6.85h-26.8c-5.11 0-8.040-1.92-8.89-5.7h35.82v-6.95H11.2c-4.94.02-8.27-2.25-8.27-6.25v-4.8c0-4.59 3.24-6.67 8.89-6.67zM68 30.79h22.21c3.6 0 4-1.21 4-3.39v-1.19c0-2.14-.53-3.3-4.44-3.3H68.07zm227.33-5.7a171 171 0 0 0-7.93 4.98l-17-12.45h14.48zm-36.96-2.18h-41.42v-5.3h41.42z"/></svg>
     <svg class="lg-weather" viewBox="0 0 58 45" fill="currentColor" aria-label="The Weather Company">
       <text x="0" y="11" font-family="Geist,Helvetica,Arial,sans-serif" font-size="10" font-weight="600">The</text>
       <text x="0" y="23" font-family="Geist,Helvetica,Arial,sans-serif" font-size="10" font-weight="600">Weather</text>
@@ -511,6 +579,8 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
   var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   root.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
   document.getElementById('themeToggle').addEventListener('click', function(){
+    var st = document.getElementById('triStage');
+    if (st) st.classList.remove('glow-off');   // dark mode always opens with the glow on
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('vercel-clone-theme', next); } catch(e){}
@@ -544,10 +614,8 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
     var g = ctx.createRadialGradient(r, r, 0, r, r, r);
 
     if (isDark()){
-      // measured on vercel.com dark: 110 at the apex falling to 2 far out
-      // measured on vercel.com dark: ~110 at the apex, 30 at 100px, 10 at 200px
+      // measured on vercel.com dark: ~110 at the apex falling to 2 far out
       // Fitted to the real page: alpha = 0.43 * exp(-r / 110px).
-      // r is expressed as a fraction of the canvas radius (SIZE/2 = 450px).
       for (var i = 0; i <= 30; i++){
         var t = i / 30;
         var rr = t * r;                       // r = SIZE/2
@@ -591,27 +659,41 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
   window.addEventListener('pointerleave', function(){ tx=0; ty=0; kick(); });
 })();
 
-/* 3. SCROLL ZOOM -------------------------------------------------
-   The real hero triangle grows as you scroll.                     */
+/* 2b. PRISM — clicking the triangle toggles the rainbow on and off. */
 (function(){
-  var wrap = document.getElementById('triWrap');
-  if (!wrap) return;
-  var ticking = false;
-  function update(){
-    var y = window.scrollY || window.pageYOffset;
-    var p = Math.min(1, Math.max(0, y/600));
-    wrap.style.transform = 'scale(' + (1 + p*0.6).toFixed(3) + ')';
-    ticking = false;
-  }
-  // expose for the demo button
-  window.__triZoom = function(p){ wrap.style.transform = 'scale(' + (1 + p*0.6).toFixed(3) + ')'; };
-  window.addEventListener('scroll', function(){
-    if(!ticking){ ticking = true; requestAnimationFrame(update); }
-  }, {passive:true});
-  update();
+  var stage = document.getElementById('triStage');
+  if (!stage) return;
+  var toggle = function(){
+    // dark mode: no rainbow — the click toggles the white glow off / on instead
+    if (document.documentElement.getAttribute('data-theme') === 'dark'){
+      stage.classList.toggle('glow-off');
+      return;
+    }
+    stage.classList.toggle('prism-on');
+  };
+  // only the black triangle itself is the trigger
+  var poly = stage.querySelector('.tri .body');
+  poly.addEventListener('click', toggle);
+  poly.addEventListener('touchstart', function(e){ e.preventDefault(); toggle(); }, {passive:false});
 })();
 
-/* 4. COOKIE BANNER ----------------------------------------------- */
+/* 2c. ORBITING LIGHT — both shadows point the same way and slowly rotate
+   (measured: ~27deg down-right at load, drifting ~0.075 rad/s, cursor-independent). */
+(function(){
+  var wide = document.getElementById('shWide'), contact = document.getElementById('shContact'), edge = document.getElementById('shEdge');
+  if (!wide || !contact) return;
+  var A0 = 0.465, W = 0.075, start = performance.now();
+  function place(a){
+    var c = Math.cos(a), s = Math.sin(a);
+    wide.setAttribute('transform','translate('+(20.5*c).toFixed(2)+' '+(20.5*s).toFixed(2)+')');
+    contact.setAttribute('transform','translate('+(7.3*c).toFixed(2)+' '+(7.3*s).toFixed(2)+')');
+    if (edge) edge.setAttribute('transform','translate('+(2.4*c).toFixed(2)+' '+(2.4*s).toFixed(2)+')');
+  }
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){ place(A0); return; }
+  (function tick(now){ place(A0 + W*(now-start)/1000); requestAnimationFrame(tick); })(start);
+})();
+
+/* 3. COOKIE BANNER ----------------------------------------------- */
 (function(){
   var box = document.getElementById('cookie');
   if(!box) return;
