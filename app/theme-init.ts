@@ -1,0 +1,1 @@
+export const THEME_INIT = `(function(){try{var s=localStorage.getItem('vercel-clone-theme');var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(d?'dark':'light'));}catch(e){}})();`;

@@ -1,0 +1,454 @@
+/* ==================================================================
+   VERCEL HERO — rebuilt from live measurements at 1280x900
+   ================================================================== */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#fafafa;
+  --fg:#171717;
+  --fg-muted:#4d4d4d;
+  --border:#ebebeb;
+  --border-strong:#d4d4d4;
+  --btn-dark-bg:#171717;
+  --btn-dark-fg:#ffffff;
+  --btn-light-bg:#ffffff;
+  --btn-light-fg:#171717;
+  --tri:#000000;
+  --nav-hover:rgba(0,0,0,.05);
+  --glow-core:rgba(255,255,255,.055);
+  --glow-s1:rgba(255,255,255,.048);
+  --glow-s2:rgba(255,255,255,.040);
+  --glow-s3:rgba(255,255,255,.032);
+  --glow-s4:rgba(255,255,255,.024);
+  --glow-s5:rgba(255,255,255,.016);
+  --glow-s6:rgba(255,255,255,.009);
+  --glow-s7:rgba(255,255,255,.003);
+  --glow-size:900px;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --dur:.15s;
+}
+
+html[data-theme="dark"]{
+  --bg:#000000;
+  --fg:#ededed;
+  --fg-muted:#a1a1a1;
+  --border:#1f1f1f;
+  --border-strong:#333333;
+  --btn-dark-bg:#ededed;
+  --btn-dark-fg:#0a0a0a;
+  --btn-light-bg:#0a0a0a;
+  --btn-light-fg:#ededed;
+  --tri:#000000;
+  --nav-hover:rgba(255,255,255,.08);
+  --glow-core:rgba(255,255,255,.92);
+  --glow-s1:rgba(255,255,255,.70);
+  --glow-s2:rgba(255,255,255,.50);
+  --glow-s3:rgba(255,255,255,.34);
+  --glow-s4:rgba(255,255,255,.21);
+  --glow-s5:rgba(255,255,255,.115);
+  --glow-s6:rgba(255,255,255,.052);
+  --glow-s7:rgba(255,255,255,.016);
+  --glow-size:900px;
+}
+
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  transition:background-color .4s ease,color .4s ease;
+  overflow-x:hidden;
+}
+
+/* ---------------- HEADER ---------------- */
+.header{
+  position:sticky;top:0;z-index:100;
+  height:64px;background:var(--bg);
+  transition:background-color .4s ease;
+}
+.header-inner{
+  max-width:1280px;margin:0 auto;height:64px;
+  padding:0 24px;display:flex;align-items:center;gap:8px;
+}
+.logo{
+  display:flex;align-items:center;justify-content:center;
+  width:32px;height:32px;margin-right:8px;color:var(--fg);
+  transition:color .4s ease,opacity var(--dur) var(--ease);
+}
+.logo svg{width:22px;height:19px;display:block}
+.logo:hover{opacity:.7}
+
+.nav{display:flex;align-items:center;gap:2px}
+.nav-item{
+  display:inline-flex;align-items:center;gap:4px;
+  height:32px;padding:0 10px;
+  font-size:14px;font-weight:400;line-height:1;
+  color:var(--fg-muted);background:transparent;
+  border:0;border-radius:6px;cursor:pointer;text-decoration:none;
+  font-family:inherit;
+  transition:color var(--dur) var(--ease),background-color var(--dur) var(--ease);
+}
+.nav-item:hover{color:var(--fg);background:var(--nav-hover)}
+.nav-item .chev{width:11px;height:11px;opacity:.55;transition:transform var(--dur) var(--ease)}
+.nav-item:hover .chev{transform:translateY(1px)}
+
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+/* ---------------- BUTTONS ---------------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:32px;padding:0 12px;
+  font-family:inherit;font-size:14px;font-weight:500;line-height:1;
+  border-radius:6px;border:1px solid transparent;
+  text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:background-color var(--dur) var(--ease),
+             color var(--dur) var(--ease),
+             border-color var(--dur) var(--ease),
+             opacity var(--dur) var(--ease);
+}
+.btn-ghost{background:var(--btn-light-bg);color:var(--btn-light-fg);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--border-strong)}
+html[data-theme="dark"] .btn-ghost:hover{background:#1a1a1a;border-color:#444}
+.btn-dark{background:var(--btn-dark-bg);color:var(--btn-dark-fg);border-color:var(--btn-dark-bg)}
+.btn-dark:hover{opacity:.85}
+
+/* hero buttons: 40px tall, pill, 16px */
+.btn-lg{height:40px;padding:0 16px;font-size:16px;border-radius:9999px}
+
+/* ---------------- THEME TOGGLE ---------------- */
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;padding:0;
+  background:transparent;border:1px solid var(--border);border-radius:6px;
+  color:var(--fg-muted);cursor:pointer;
+  transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease),background-color var(--dur) var(--ease);
+}
+.theme-toggle:hover{color:var(--fg);border-color:var(--border-strong);background:var(--nav-hover)}
+.theme-toggle svg{width:15px;height:15px;display:block}
+.theme-toggle .moon{display:none}
+html[data-theme="dark"] .theme-toggle .sun{display:none}
+html[data-theme="dark"] .theme-toggle .moon{display:block}
+
+/* ---------------- HERO ---------------- */
+.hero{
+  position:relative;
+  max-width:1280px;margin:0 auto;
+  padding:0 24px 108px;  /* reserved for the pinned logo strip */
+  min-height:calc(100vh - 64px);
+  display:flex;flex-direction:column;
+}
+.hero-row{
+  position:relative;
+  flex:1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:40px 0;
+  width:100%;
+}
+
+/* left block: 444 wide, h1 + 32px gap + buttons */
+.hero-left{
+  width:444px;
+  max-width:444px;
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:32px;
+}
+.hero-title{
+  width:100%;
+  font-size:64px;
+  line-height:64px;
+  font-weight:400;
+  letter-spacing:-3.84px;
+  color:var(--fg);
+  margin:0;
+  transition:color .4s ease;
+}
+.hero-cta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+
+/* ---------------- TRIANGLE (absolutely centred in the row) --------- */
+.tri-stage{
+  position:absolute;
+  left:50%;top:50%;
+  width:222px;height:222px;
+  margin-left:-111px;
+  margin-top:-91px;   /* real svg sits at y=337 in a row centred at 428 */
+  display:flex;align-items:center;justify-content:center;
+  z-index:0;
+}
+.tri-glow{
+  position:absolute;
+  left:50%;top:50%;
+  width:var(--glow-size);height:var(--glow-size);
+  margin-left:calc(var(--glow-size) / -2);
+  margin-top:calc(var(--glow-size) / -2 - 118px);
+  pointer-events:none;
+  will-change:transform;
+  transform:translate3d(0,0,0);
+  transition:opacity .7s linear;
+}
+.tri-glow canvas{width:100%;height:100%;display:block}
+.tri-wrap{
+  position:relative;
+  width:222px;height:222px;
+  display:flex;align-items:center;justify-content:center;
+  transform:scale(1);
+  transform-origin:center center;
+  will-change:transform;
+  transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+.tri{
+  width:100%;height:100%;display:block;overflow:visible;
+  transform:none !important;
+}
+.tri polygon{fill:var(--tri);transition:fill .4s ease;pointer-events:auto}
+.tri{pointer-events:none}
+
+/* ---------- LIGHT MODE: idle 3D shading ---------- */
+.tri-shade,.tri-prism{position:absolute;left:50%;top:50%;pointer-events:none;z-index:-1}
+.tri-shade{
+  width:340px;height:340px;margin:-180px 0 0 -178px;border-radius:50%;
+  background:radial-gradient(circle,#fff 0%,#fff 38%,rgba(255,255,255,.6) 55%,rgba(255,255,255,0) 72%);
+  transition:opacity .7s linear;
+  translate:var(--hx,-6px) var(--hy,-8px);
+}
+/* the shadow is cast AWAY from the cursor (the cursor is the light source) */
+html[data-theme="light"] .tri{filter:drop-shadow(var(--sx,9px) var(--sy,12px) 12px rgba(0,0,0,.30));transition:filter .2s linear}
+.tri-prism{
+  width:960px;height:560px;margin:-250px 0 0 -480px;border-radius:50%;
+  translate:var(--px,0px) var(--py,0px);
+  background:conic-gradient(from calc(var(--rot,0deg) + var(--flow,0deg)),
+    #ff9af4 0deg,#c89bff 25deg,#59aaff 55deg,#6cc4ff 95deg,#5ef2ff 135deg,
+    #b4ffa0 180deg,#f4ff86 215deg,#ffd27a 235deg,#ff7a86 265deg,#ff86a6 310deg,#ff9af4 360deg);
+  -webkit-mask:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.9) 14%,rgba(0,0,0,.45) 40%,rgba(0,0,0,.14) 70%,rgba(0,0,0,.04) 90%,transparent 100%);
+          mask:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.9) 14%,rgba(0,0,0,.45) 40%,rgba(0,0,0,.14) 70%,rgba(0,0,0,.04) 90%,transparent 100%);
+  filter:blur(14px) saturate(1.1);
+  opacity:0;
+  transition:opacity .7s linear;
+}
+/* no scale at all on hover: the triangle and the rainbow keep their size */
+.tri-stage[data-state="rainbow"] .tri-prism{opacity:1}
+.tri-stage[data-state="rainbow"] .tri-shade{opacity:0}
+html[data-theme="light"] .tri-stage[data-state="rainbow"] .tri{filter:drop-shadow(0 0 3px rgba(255,255,255,.95))}
+.hero-left,.hero-right{position:relative;z-index:2}
+
+/* ---------- DARK MODE ---------- */
+html[data-theme="dark"] .tri-glow{margin-top:calc(var(--glow-size) / -2 - 20px);transform:none !important;transition:opacity 1s ease}
+html[data-theme="dark"] .tri{
+  filter:drop-shadow(0 0 2px rgba(255,255,255,.95)) drop-shadow(0 0 12px rgba(255,255,255,.8)) drop-shadow(0 0 40px rgba(255,255,255,.4));
+  transition:filter 1s ease;
+}
+html[data-theme="dark"] .tri-shade{
+  width:260px;height:260px;margin:-130px 0 0 -130px;translate:none;border-radius:0;background:none;
+  filter:blur(13px) saturate(1.25);
+  opacity:0;transition:opacity 1s ease;
+}
+html[data-theme="dark"] .tri-shade::before{
+  content:"";position:absolute;inset:0;
+  clip-path:polygon(130px 4px,238px 191px,22px 191px);
+  background:conic-gradient(from var(--flow,0deg) at 130px 130px,#f3e9ff 0deg,#b9a8ff 30deg,#6f9dff 75deg,#4d86ff 120deg,#3fcf8e 170deg,#3fcf8e 190deg,#ff5f8f 240deg,#ff4fa3 285deg,#e9a8ff 330deg,#f3e9ff 360deg);
+}
+html[data-theme="dark"] .tri-prism{
+  width:900px;height:760px;margin:-380px 0 0 -450px;translate:none;
+  background:conic-gradient(from var(--flow,0deg),#7d5cff 0deg,#3d6bff 80deg,#2f7dff 110deg,#1fa36b 180deg,#5a2a50 220deg,#ff2d6f 260deg,#ff3a8c 300deg,#a35cff 340deg,#7d5cff 360deg);
+  -webkit-mask:radial-gradient(closest-side,rgba(0,0,0,.42) 0%,rgba(0,0,0,.24) 30%,rgba(0,0,0,.09) 60%,rgba(0,0,0,.02) 85%,transparent 100%);
+          mask:radial-gradient(closest-side,rgba(0,0,0,.42) 0%,rgba(0,0,0,.24) 30%,rgba(0,0,0,.09) 60%,rgba(0,0,0,.02) 85%,transparent 100%);
+  filter:blur(30px);
+  opacity:0;transition:opacity 1s ease;
+}
+html[data-theme="dark"] .tri-stage[data-state="rainbow"] .tri-prism,
+html[data-theme="dark"] .tri-stage[data-state="rainbow"] .tri-shade{opacity:1}
+html[data-theme="dark"] .tri-stage[data-state="rainbow"] .tri-glow{opacity:0}
+html[data-theme="dark"] .tri-stage[data-state="rainbow"] .tri{
+  filter:drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 0 0 rgba(255,255,255,0)) drop-shadow(0 0 0 rgba(255,255,255,0));
+}
+
+/* right nav */
+.hero-right{
+  width:364px;
+  max-width:364px;
+  padding:32px 8px;
+  display:flex;flex-direction:column;gap:8px;
+  font-size:16px;
+  line-height:24px;
+  font-weight:450;
+  color:var(--fg);
+  transition:color .4s ease;
+  z-index:1;
+}
+.hero-right p{margin:0}
+.hero-right a{
+  color:inherit;text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);
+}
+.hero-right a:hover{color:var(--fg-muted);border-bottom-color:var(--border-strong)}
+
+/* ---------------- LOGO ROW ---------------- */
+.logos{
+  position:absolute;
+  left:24px;right:24px;bottom:40px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+  overflow:visible;
+}
+.logos svg{display:block;color:var(--fg);opacity:.92;transition:opacity var(--dur) var(--ease),color .4s ease}
+.logos svg:hover{opacity:1}
+.logos .lg-meta{width:88px;height:18px}
+.logos .lg-doordash{width:147px;height:17px}
+.logos .lg-openai{width:78px;height:21px}
+.logos .lg-spacex{width:132px;height:16px}
+.logos .lg-weather{width:58px;height:45px}
+.logos .lg-poly{width:130px;height:30px}
+
+/* ---------------- SECTION 2 ---------------- */
+.section2{
+  max-width:1280px;margin:0 auto;
+  padding:120px 24px 160px;
+  border-top:1px solid var(--border);
+  transition:border-color .4s ease;
+}
+.section2-inner{max-width:900px}
+.section2-title{
+  font-size:56px;line-height:1.04;font-weight:400;
+  letter-spacing:-.055em;color:var(--fg);
+  margin:0 0 20px;transition:color .4s ease;
+}
+.section2-sub{
+  font-size:18px;line-height:28px;color:var(--fg-muted);
+  margin:0 0 64px;transition:color .4s ease;
+}
+.section2-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+.s2-card{
+  border:1px solid var(--border);border-radius:12px;
+  padding:28px 24px;background:var(--bg);
+  transition:border-color .2s ease,background-color .4s ease,transform .2s ease;
+}
+.s2-card:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+.s2-icon{
+  font-size:20px;line-height:1;color:var(--fg);
+  margin-bottom:18px;transition:color .4s ease;
+}
+.s2-card h3{
+  font-size:17px;font-weight:500;color:var(--fg);
+  margin:0 0 8px;transition:color .4s ease;
+}
+.s2-card p{
+  font-size:14px;line-height:22px;color:var(--fg-muted);
+  margin:0;transition:color .4s ease;
+}
+@media (max-width:900px){
+  .section2{padding:80px 24px 100px}
+  .section2-title{font-size:clamp(32px,6vw,44px)}
+  .section2-grid{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .section2{padding:64px 16px 80px}
+}
+
+/* ---------------- DEMO / LEGAL FOOTER ---------------- */
+.demo-footer{
+  width:100%;
+  border-top:1px solid var(--border);
+  padding:40px 24px 48px;
+  transition:border-color .4s ease;
+}
+.demo-footer-inner{
+  max-width:760px;margin:0 auto;text-align:center;
+  font-size:12.5px;line-height:20px;color:var(--fg-muted);
+  transition:color .4s ease;
+}
+.demo-footer-inner p{margin:0 0 14px}
+.demo-footer-inner p:last-child{margin-bottom:0}
+.demo-footer-inner strong{font-weight:600;color:var(--fg-muted)}
+.demo-footer-inner a{color:var(--fg-muted);text-decoration:underline;text-underline-offset:2px}
+.demo-footer-inner a:hover{color:var(--fg)}
+@media (max-width:720px){
+  .demo-footer{padding:32px 16px 40px}
+  .demo-footer-inner{font-size:12px;line-height:19px}
+}
+
+/* ---------------- COOKIE BANNER ---------------- */
+.cookie{
+  position:fixed;left:16px;bottom:16px;z-index:200;
+  width:420px;max-width:calc(100vw - 32px);
+  background:var(--btn-light-bg);
+  border:1px solid var(--border);
+  border-radius:12px;padding:16px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  font-size:13px;line-height:19px;color:var(--fg-muted);
+  transition:opacity .3s ease,transform .3s ease,background-color .4s ease,border-color .4s ease;
+}
+html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
+.cookie.hide{opacity:0;transform:translateY(12px);pointer-events:none}
+.cookie-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.cookie .btn{height:30px;font-size:13px;padding:0 12px;border-radius:9999px}
+
+/* ---------------- ENTRANCE ---------------- */
+@keyframes soft-fade-in{0%{opacity:.3}100%{opacity:1}}
+@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+@keyframes slide-in{0%{opacity:0;transform:translateY(75%)}100%{opacity:1;transform:translateY(0)}}
+
+.anim-title{animation:slide-in .7s cubic-bezier(.22,1,.36,1) both}
+.anim-cta{animation:fade-in .6s ease .18s both}
+.anim-tri{animation:soft-fade-in .9s ease .05s both}
+.anim-right{animation:fade-in .6s ease .3s both}
+.anim-logos{animation:fade-in .8s ease .45s both}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width:1024px){
+  .hero{min-height:0;padding-top:32px;padding-bottom:32px}
+  .hero-row{flex-direction:column;align-items:center;text-align:center;gap:24px;padding:0}
+  .hero-left{width:100%;max-width:640px;align-items:center;order:2}
+  .hero-title{font-size:clamp(40px,7vw,56px);line-height:1.02;letter-spacing:-.05em}
+  .hero-cta{justify-content:center}
+  .tri-stage{position:relative;left:auto;top:auto;margin:0;order:1;width:180px;height:180px}
+  .tri-wrap{width:180px;height:180px}
+  .tri-glow{width:360px;height:360px;margin-left:-180px;margin-top:-180px}
+  .hero-right{order:3;width:100%;max-width:520px;align-items:center;text-align:center;padding:0}
+  .logos{justify-content:center;gap:40px}
+}
+@media (max-width:720px){
+  .header-inner{padding:0 16px}
+  .nav{display:none}
+  .hero{padding:0 16px 32px}
+  .hero-title{font-size:clamp(34px,9vw,44px);letter-spacing:-.045em}
+  .tri-stage{width:150px;height:150px}
+  .tri-wrap{width:150px;height:150px}
+  .tri-glow{width:300px;height:300px;margin-left:-150px;margin-top:-150px}
+  .logos{padding:0 16px 40px;gap:28px}
+  .logos svg{height:20px}
+  .cookie{left:8px;right:8px;bottom:8px;width:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+
+/* ================= 3-CLICK CYCLE: off -> light -> rainbow -> off ================= */
+.tri polygon{cursor:pointer}
+/* OFF: plain triangle, no light, no rainbow */
+.tri-stage[data-state="off"] .tri-shade,
+.tri-stage[data-state="off"] .tri-prism,
+.tri-stage[data-state="off"] .tri-glow{opacity:0}
+html[data-theme="light"] .tri-stage[data-state="off"] .tri{filter:none}
+/* dark OFF: thin rim so the black logo stays visible on black */
+html[data-theme="dark"] .tri-stage[data-state="off"] .tri{
+  filter:drop-shadow(0 0 1px rgba(255,255,255,.55)) drop-shadow(0 0 0 rgba(255,255,255,0)) drop-shadow(0 0 0 rgba(255,255,255,0));
+}
+/* LIGHT: white halo (light theme) / white glow (dark theme), rainbow hidden */
+.tri-stage[data-state="light"] .tri-prism{opacity:0}
+.tri-stage[data-state="light"] .tri-glow{opacity:1}
+
+/* ================= FLOW ON HOVER ================= */
+@keyframes tri-breathe{0%,100%{opacity:1}50%{opacity:.7}}
+.tri-stage.flowing[data-state="rainbow"] .tri-prism,
+html[data-theme="dark"] .tri-stage.flowing[data-state="rainbow"] .tri-shade,
+.tri-stage.flowing[data-state="light"] .tri-shade,
+html[data-theme="dark"] .tri-stage.flowing[data-state="light"] .tri-glow{animation:tri-breathe 2.4s ease-in-out infinite}
+html[data-theme="light"] .tri-stage.flowing[data-state="light"] .tri-shade{animation:none}
+@property --flow{syntax:"<angle>";inherits:true;initial-value:0deg}
