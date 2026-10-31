@@ -159,6 +159,11 @@ export const MARKUP_FOOTER = `<footer class="vf">
       <p class="vf-status-text">All systems normal.</p>
     </a>
     <div class="vf-bar-right">
+      <div class="vf-theme" role="radiogroup" aria-label="Theme">
+        <button type="button" class="vf-tbtn" data-theme-pick="system" role="radio" aria-label="System theme"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2.5" width="12" height="8.5" rx="1.5"/><path d="M5.5 13.5h5M8 11v2.5"/></svg></button>
+        <button type="button" class="vf-tbtn" data-theme-pick="light" role="radio" aria-label="Light theme"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="2.8"/><path d="M8 1.5v1.4M8 13.1v1.4M1.5 8h1.4M13.1 8h1.4M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></svg></button>
+        <button type="button" class="vf-tbtn on" data-theme-pick="dark" role="radio" aria-label="Dark theme"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 9.4A5.8 5.8 0 0 1 6.6 2.5a5.8 5.8 0 1 0 6.9 6.9z"/></svg></button>
+      </div>
       <button class="vf-agent" type="button" aria-label="View as AI agent"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M13.76 1.01A2.5 2.5 0 0 1 16 3.5v9a2.5 2.5 0 0 1-2.5 2.5h-11a2.5 2.5 0 0 1-2.49-2.24L0 12.5v-9c0-1.3.98-2.36 2.24-2.49L2.5 1h11zM1.5 12.5a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V5h-13zm5.25-5.57v4.01h-1.5V6.92zm4 4h-1.5v-4h1.5zm-9-8.43a.25.25 0 0 0-.25.25v1c0 .14.11.25.25.25H3V2.5zM4 2.5V4h1.5V2.5zm2.5 0V4h1.25c.14 0 .25-.11.25-.25v-1a.25.25 0 0 0-.25-.25z" clip-rule="evenodd"/></svg></button>
     </div>
   </div>

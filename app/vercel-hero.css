@@ -388,12 +388,18 @@ html[data-theme="dark"] .tri-stage.prism-on .tri{
 }
 
 /* ---------------- SITE FOOTER (rebuilt 1:1 from vercel.com) ----------------
-   Measured on vercel.com at 1440px:
-     footer ......... max-width 1448, margin auto, padding 40px 24px, font 14px
-     grid ........... 12 cols x 94px, gap 24px, every column spans 2 (=212px)
+   Measured live on vercel.com at 1280px (dark):
+     footer ......... max-width 1448, margin auto, padding 40px 24px, font 14px, no border
+     grid ........... 12 cols, gap 24px, every column spans 2 (=6 per row)
+     rows ........... 296px / 324px / 32px (logo cell is the 13th cell, spans 2)
      h2 ............. 14px / 20px, weight 500, margin 12px 0
-     links .......... 14px / 20px, weight 400, colour #4d4d4d, li padding 2px 0
+     links .......... 14px / 20px, weight 400, colour #a1a1a1 (dark) / #4d4d4d (light)
+     li ............. padding 2px 0, line-height 20px
+     badge "New" .... 11px / 20px, height 20px, padding 2px 8px, pill, bg #262626 (dark)
+     logo ........... 16 x 14 svg inside a 32px tall cell
      bottom bar ..... flex, space-between, margin-top 32px, min-height 34px
+     status ......... Geist Mono 12px / 20px, weight 500, uppercase, #0070f3, dot 10px
+     agent button ... 24 x 24, radius 4px, colour #8f8f8f, margin-left 4px
    -------------------------------------------------------------------------- */
 .vf{
   max-width:1448px;margin:0 auto;
@@ -402,17 +408,16 @@ html[data-theme="dark"] .tri-stage.prism-on .tri{
   color:var(--fg);
   transition:color .4s ease;
 }
-.vf-inner{width:100%}
+.vf-nav{width:100%}
 
-.vf-cols{
+.vf-grid{
   display:grid;
   grid-template-columns:repeat(12,1fr);
   column-gap:24px;row-gap:24px;
 }
-.vf-cols + .vf-cols{margin-top:24px}
 .vf-col{grid-column:span 2;min-width:0}
 
-.vf-col h4{
+.vf-col h2{
   font-size:14px;line-height:20px;font-weight:500;
   color:var(--fg);margin:12px 0;
   transition:color .4s ease;
@@ -423,40 +428,40 @@ html[data-theme="dark"] .tri-stage.prism-on .tri{
   display:inline-flex;align-items:center;gap:6px;
   font-size:14px;line-height:20px;font-weight:400;
   color:var(--fg-muted);text-decoration:none;
-  padding:2px 0;
+  padding:2px;margin-left:-2px;
   transition:color .1s ease;
 }
 .vf-col a:hover{color:var(--fg)}
 
 .vf-badge{
   display:inline-flex;align-items:center;justify-content:center;
-  height:20px;padding:0 8px;border-radius:9999px;
+  height:20px;padding:2px 8px;border-radius:9999px;
   font-size:11px;line-height:20px;letter-spacing:.2px;font-weight:500;
-  background:rgba(0,0,0,.06);color:var(--fg);
+  background:#ebebeb;color:var(--fg);
   transition:background-color .4s ease,color .4s ease;
 }
-html[data-theme="dark"] .vf-badge{background:rgba(255,255,255,.14)}
+html[data-theme="dark"] .vf-badge{background:#262626}
 
-/* bottom: triangle logo on its own line, then status left / icons right */
-.vf-bottom{margin-top:32px}
-.vf-logo{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:16px;height:14px;color:var(--fg);
+/* the triangle logo is the 13th cell of the same grid, on its own row */
+.vf-logo-cell{grid-column:span 2;height:32px}
+.vf-logo-cell a{
+  display:flex;align-items:center;
+  height:32px;width:100%;
+  color:var(--fg);text-decoration:none;
   transition:color .4s ease,opacity .15s ease;
 }
-.vf-logo svg{width:16px;height:14px;display:block}
-.vf-logo:hover{opacity:.7}
+.vf-logo-cell a:hover{opacity:.7}
+.vf-logo-cell svg{width:16px;height:14px;display:block}
 
-.vf-status-row{
+/* bottom bar: status on the left, icon buttons on the right */
+.vf-bar{
   display:flex;align-items:center;justify-content:space-between;
-  gap:16px;margin-top:36px;min-height:34px;
+  margin-top:32px;min-height:34px;
 }
 .vf-status{
   display:inline-flex;align-items:center;gap:6px;
-  font-family:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-size:12px;line-height:20px;font-weight:500;
-  letter-spacing:0;text-transform:uppercase;
-  color:#0070f3;text-decoration:none;
+  height:34px;padding:0 8px;margin-left:-8px;
+  text-decoration:none;
   transition:opacity .15s ease;
 }
 .vf-status:hover{opacity:.75}
@@ -469,28 +474,41 @@ html[data-theme="dark"] .vf-badge{background:rgba(255,255,255,.14)}
   70%{box-shadow:0 0 0 7px rgba(0,112,243,0)}
   100%{box-shadow:0 0 0 0 rgba(0,112,243,0)}
 }
-
-.vf-actions{display:flex;align-items:center;gap:4px;margin-left:auto}
-.vf-icon{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:24px;height:24px;padding:0;
-  background:transparent;border:0;border-radius:6px;
-  color:var(--fg-muted);cursor:pointer;
-  transition:color .15s ease,background-color .15s ease;
+.vf-status-text{
+  font-family:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12px;line-height:20px;font-weight:500;
+  text-transform:uppercase;color:#0070f3;
 }
-.vf-icon:hover{color:var(--fg);background:var(--nav-hover)}
-.vf-icon svg{width:16px;height:16px;display:block}
+.vf-bar-right{display:flex;align-items:center;gap:4px;margin-left:auto}
+.vf-theme{display:inline-flex;align-items:center;gap:0;padding:2px;border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+html[data-theme="light"] .vf-theme{box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.vf-tbtn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;border-radius:999px;background:transparent;color:#8f8f8f;cursor:pointer;transition:color .15s ease,box-shadow .15s ease}
+.vf-tbtn:hover{color:var(--fg)}
+.vf-tbtn svg{width:16px;height:16px;display:block}
+.vf-tbtn.on{color:var(--fg);box-shadow:0 0 0 1px rgba(255,255,255,.22)}
+html[data-theme="light"] .vf-tbtn.on{box-shadow:0 0 0 1px rgba(0,0,0,.2)}
+.vf-agent{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;padding:0;margin-left:4px;
+  background:transparent;border:0;border-radius:4px;
+  color:#8f8f8f;cursor:pointer;
+  transition:color .15s ease;
+}
+.vf-agent:hover{color:var(--fg)}
+.vf-agent svg{width:16px;height:16px;display:block}
 
+/* vercel's own breakpoints: 4 / 6 / 8 / 12 columns, every cell spans 2 */
 @media (max-width:1279px){
-  .vf-cols{grid-template-columns:repeat(8,1fr)}
+  .vf-grid{grid-template-columns:repeat(8,1fr)}
 }
 @media (max-width:1023px){
-  .vf-cols{grid-template-columns:repeat(6,1fr)}
+  .vf-grid{grid-template-columns:repeat(6,1fr)}
 }
 @media (max-width:767px){
   .vf{padding:32px 16px}
-  .vf-cols{grid-template-columns:repeat(4,1fr);column-gap:16px}
-  .vf-status-row{flex-wrap:wrap;gap:12px}
+  .vf-grid{grid-template-columns:repeat(4,1fr);column-gap:16px}
+  .vf-bar{flex-wrap:wrap;gap:12px}
+  .vf-status{margin-left:-8px}
 }
 
 /* ---------------- DEMO / LEGAL FOOTER ---------------- */
