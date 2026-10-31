@@ -315,13 +315,30 @@ html[data-theme="dark"] .tri-stage.prism-on .tri{
   transition:color .4s ease;
   z-index:1;
 }
-.hero-right p{margin:0}
-.hero-right a{
-  color:inherit;text-decoration:none;
-  border-bottom:1px solid transparent;
-  transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);
+/* hover rows, measured on vercel.com:
+   idle row = 24px tall, only the heading shows.
+   hovered row = 84px tall, the description fades in under the heading,
+   the other two headings dim to --fg-muted. Height + opacity are animated
+   with framer-motion from app/vercel-hero.ts (0.2s / 0.5s, cubic-bezier(0,0,.2,1)). */
+.hr-row{
+  height:24px;
+  overflow:hidden;
+  cursor:default;
+  text-align:left;
 }
-.hero-right a:hover{color:var(--fg-muted);border-bottom-color:var(--border-strong)}
+.hr-line{display:block}
+.hr-head{
+  font-size:16px;line-height:24px;font-weight:450;letter-spacing:-.32px;
+  color:var(--fg);
+  transition:color .5s var(--ease);
+}
+.hr-desc{
+  font-size:16px;line-height:24px;font-weight:400;letter-spacing:-.32px;
+  color:var(--fg-muted);
+  opacity:0;
+}
+.hero-right.hr-active .hr-head{color:var(--fg-muted)}
+.hero-right.hr-active .hr-row.hr-on .hr-head{color:var(--fg)}
 
 /* ---------------- LOGO ROW ---------------- */
 .logos{
@@ -571,6 +588,7 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
   .tri-wrap{width:180px;height:180px}
   .tri-glow{width:360px;height:360px;margin-left:-180px;margin-top:-180px}
   .hero-right{order:3;width:100%;max-width:520px;align-items:center;text-align:center;padding:0}
+  .hr-row{text-align:center}
   .logos{justify-content:center;gap:40px}
 }
 @media (max-width:720px){

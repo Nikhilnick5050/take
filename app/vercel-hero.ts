@@ -1,6 +1,8 @@
 // @ts-nocheck
 /* Reference HTML script copied 1:1 (cdn.classgrid.in/ai-generated/1793453291115-index.html).
    Only changes: click = 1-click toggle light <-> rainbow (never off), theme switch resets it, hover flow added at the end. */
+import { animate } from "framer-motion";
+
 let started = false;
 export function initPage() {
   if (started) return;
@@ -176,6 +178,38 @@ export function initPage() {
   var area = document.getElementById('triWrap') || poly;
   area.addEventListener('pointerenter', function(){ hover = true; stage.classList.add('flowing'); if (!raf) raf = requestAnimationFrame(step); });
   area.addEventListener('pointerleave', function(){ hover = false; stage.classList.remove('flowing'); });
+})();
+
+/* 4. HERO RIGHT — hover rows (framer-motion) ----------------------
+   Copied from vercel.com: idle each line is 24px tall and only the
+   heading shows. Hovering a line grows it to 84px and fades its
+   description in underneath, while the other two headings dim.
+   Timings measured on the live site: height 0.2s, opacity 0.5s in /
+   0.3s out, easing cubic-bezier(0, 0, .2, 1).                        */
+(function(){
+  var right = document.getElementById('heroRight');
+  if (!right) return;
+  var rows = Array.prototype.slice.call(right.querySelectorAll('[data-hr]'));
+  if (!rows.length) return;
+  var open = -1;
+
+  function setOpen(i){
+    if (i === open) return;
+    open = i;
+    right.classList.toggle('hr-active', i > -1);
+    rows.forEach(function(row, idx){
+      var on = idx === i;
+      row.classList.toggle('hr-on', on);
+      var desc = row.querySelector('.hr-desc');
+      animate(row, { height: on ? 84 : 24 }, { duration: 0.2, ease: [0, 0, 0.2, 1] });
+      if (desc) animate(desc, { opacity: on ? 1 : 0 }, { duration: on ? 0.5 : 0.3, ease: [0, 0, 0.2, 1] });
+    });
+  }
+
+  rows.forEach(function(row, idx){
+    row.addEventListener('pointerenter', function(){ setOpen(idx); });
+  });
+  right.addEventListener('pointerleave', function(){ setOpen(-1); });
 })();
 
 }
