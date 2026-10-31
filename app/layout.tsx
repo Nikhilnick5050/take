@@ -1,4 +1,4 @@
-import "./globals.css";
+import "./vercel-hero.css";
 import type { Metadata } from "next";
 import { THEME_INIT } from "./theme-init";
 
