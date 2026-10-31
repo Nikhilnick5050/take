@@ -1,6 +1,6 @@
 // @ts-nocheck
 /* Reference HTML script copied 1:1 (cdn.classgrid.in/ai-generated/1793453291115-index.html).
-   Only changes: click = 3-step loop, theme switch resets it, hover flow added at the end. */
+   Only changes: click = 1-click toggle light <-> rainbow (never off), theme switch resets it, hover flow added at the end. */
 let started = false;
 export function initPage() {
   if (started) return;
@@ -48,27 +48,29 @@ export function initPage() {
     var r = SIZE / 2;
     var g = ctx.createRadialGradient(r, r, 0, r, r, r);
 
-    if (isDark()){
-      // measured on vercel.com dark: ~110 at the apex falling to 2 far out
-      // Fitted to the real page: alpha = 0.43 * exp(-r / 110px).
-      for (var i = 0; i <= 30; i++){
-        var t = i / 30;
-        var rr = t * r;                       // r = SIZE/2
-        var a = 0.42 * Math.exp(-rr / 140) * Math.pow(1 - t, 1.6);   // smooth fade to 0 at the edge, no hard circle
-        if (i === 30) a = 0;
-        g.addColorStop(t, 'rgba(255,255,255,' + a.toFixed(4) + ')');
-      }
-    } else {
-      // Light theme: the real page's glow is only 1 grey level (250 -> 251),
-      // which is imperceptible but quantises into visible rings on canvas.
-      // So we draw nothing here and keep the flat #fafafa, exactly as it looks.
-      return;
+    if (!isDark()) return;   // light theme: flat #fafafa, exactly like the real page
+    // dark: soft halo just above the apex, a bit taller than wide, fading to 0
+    for (var i = 0; i <= 30; i++){
+      var t = i / 30;
+      var a = 0.27 * Math.exp(-(t * r) / 120) * Math.pow(1 - t, 1.6);
+      if (i === 30) a = 0;
+      g.addColorStop(t, 'rgba(255,255,255,' + a.toFixed(4) + ')');
     }
-
+    ctx.save();
+    ctx.translate(r, r); ctx.scale(0.86, 1); ctx.translate(-r, -r);
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.arc(r, r, r, 0, Math.PI * 2);
     ctx.fill();
+    ctx.restore();
+    // film grain: vercel.com's dark glow is dithered, not a smooth airbrush
+    var img = ctx.getImageData(0, 0, canvas.width, canvas.height), d = img.data;
+    for (var k = 3; k < d.length; k += 4){
+      if (d[k] === 0) continue;
+      var n = d[k] * (0.55 + Math.random() * 0.9);
+      d[k] = n > 255 ? 255 : n;
+    }
+    ctx.putImageData(img, 0, 0);
   }
 
   draw();
@@ -99,12 +101,10 @@ export function initPage() {
   var stage = document.getElementById('triStage');
   if (!stage) return;
   var toggle = function(){
-    // both themes: the click toggles the rainbow on / off
-    // (dark: white glow <-> rainbow glow, like vercel.com)
-    // 3-click loop: light (page opens like this) -> rainbow -> off -> light
-    if (stage.classList.contains('cg-off')) { stage.classList.remove('cg-off'); }
-    else if (stage.classList.contains('prism-on')) { stage.classList.remove('prism-on'); stage.classList.add('cg-off'); }
-    else { stage.classList.add('prism-on'); }
+    // Both themes, ONE click each time: light <-> rainbow.
+    // The light is never hidden (no 'off' state), so the logo never goes blank.
+    stage.classList.remove('cg-off');
+    stage.classList.toggle('prism-on');
   };
   // only the black triangle itself is the trigger
   var poly = stage.querySelector('.tri polygon');
@@ -173,8 +173,10 @@ export function initPage() {
     stage.style.setProperty('--flow', flow.toFixed(2) + 'deg');
     if (hover || speed > 0.001) raf = requestAnimationFrame(step); else { raf = 0; last = 0; }
   }
-  poly.addEventListener('pointerenter', function(){ hover = true; if (!raf) raf = requestAnimationFrame(step); });
-  poly.addEventListener('pointerleave', function(){ hover = false; });
+  // hover area = the whole triangle box (not only the edge of the shape)
+  var area = document.getElementById('triWrap') || poly;
+  area.addEventListener('pointerenter', function(){ hover = true; stage.classList.add('flowing'); if (!raf) raf = requestAnimationFrame(step); });
+  area.addEventListener('pointerleave', function(){ hover = false; stage.classList.remove('flowing'); });
 })();
 
 }
