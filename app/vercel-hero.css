@@ -488,7 +488,9 @@ html[data-theme="dark"] .tri-stage.cg-off .tri{filter:drop-shadow(0 0 1px rgba(2
 
 /* ADDED: dark mode white light also flows on hover - a bright white wave runs around the rim */
 html[data-theme="dark"] .tri-stage.flowing:not(.prism-on):not(.cg-off) .tri-shade{opacity:1;filter:blur(10px)}
-html[data-theme="dark"] .tri-stage.flowing:not(.prism-on):not(.cg-off) .tri-shade::before{
+/* FIX: keep the rim WHITE whenever the rainbow is not switched on, so the 1s fade-out
+   after hover never shows the rainbow gradient (that was the "rainbow flash" without a click) */
+html[data-theme="dark"] .tri-stage:not(.prism-on) .tri-shade::before{
   background:conic-gradient(from var(--flow,0deg) at 130px 130px,rgba(255,255,255,.05) 0deg,rgba(255,255,255,.95) 50deg,rgba(255,255,255,.05) 120deg,rgba(255,255,255,.05) 180deg,rgba(255,255,255,.95) 230deg,rgba(255,255,255,.05) 300deg,rgba(255,255,255,.05) 360deg);
 }
 
