@@ -1,4 +1,4 @@
-import "./vercel-hero.css";
+import "./hero-click.css";
 import type { Metadata } from "next";
 import { THEME_INIT } from "./theme-init";
 
