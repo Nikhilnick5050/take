@@ -266,13 +266,13 @@ html[data-theme="light"] .tri-stage.prism-on .tri{filter:drop-shadow(0 0 3px rgb
           plus a wide, soft white halo.
    Click: crossfades (~1s) to a RAINBOW glow: pink left, violet top,
           blue right, green under the base. Click again: back to white.   */
-html[data-theme="dark"] .tri-glow{margin-top:calc(var(--glow-size) / -2 - 66px);transform:none !important;transition:opacity 1s ease}
+html[data-theme="dark"] .tri-glow{margin-top:calc(var(--glow-size) / -2 - 20px);transform:none !important;transition:opacity 1s ease}
 /* dark white light (fixed to match vercel.com): no hard uniform outline.
    Light sits BEHIND the triangle: brightest at the apex, soft along the
    slanted edges, almost nothing under the base, grainy halo above the
    apex (canvas). Two blurred white triangles faded top -> bottom.     */
 html[data-theme="dark"] .tri{
-  filter:drop-shadow(0 0 .5px rgba(255,255,255,.55));
+  filter:drop-shadow(0 0 2px rgba(255,255,255,.95)) drop-shadow(0 0 12px rgba(255,255,255,.8)) drop-shadow(0 0 40px rgba(255,255,255,.4));
   transition:filter 1s ease;
 }
 html[data-theme="dark"] .tri-wrap::before,
@@ -283,8 +283,8 @@ html[data-theme="dark"] .tri-wrap::after{
 }
 html[data-theme="dark"] .tri-wrap::before{transform:translate(-2px,-4px) scale(1.035);filter:blur(5px)}
 html[data-theme="dark"] .tri-wrap::after{transform:translate(-6px,-14px) scale(1.12,1.18);filter:blur(26px)}
-html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::before{opacity:.95;animation:rimBreath 5s ease-in-out infinite}
-html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::after{opacity:.45;animation:bloomBreath 6.5s ease-in-out infinite}
+html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::before{opacity:0}
+html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::after{opacity:0}
 @keyframes rimBreath{0%,100%{opacity:.95}50%{opacity:.78}}
 @keyframes bloomBreath{0%,100%{opacity:.45}50%{opacity:.32}}
 /* rainbow rim: a triangle-shaped colour layer, a bit bigger than the logo,
@@ -492,8 +492,10 @@ html[data-theme="light"] .tri-stage.cg-off .tri{filter:none}
 /* OFF in dark = glow OFF but the logo stays visible: crisp bright white edge, no bloom, no breathing */
 html[data-theme="dark"] .tri-stage.cg-off .tri-wrap::before,
 html[data-theme="dark"] .tri-stage.cg-off .tri-wrap::after{opacity:0 !important;animation:none !important}
-html[data-theme="dark"] .tri-stage.cg-off .tri{filter:drop-shadow(0 0 1px rgba(255,255,255,.9)) drop-shadow(0 0 1px rgba(255,255,255,.9))}
-html[data-theme="dark"] .tri-stage.cg-off .tri polygon{stroke:rgba(255,255,255,.95);stroke-width:2px;stroke-linejoin:miter;vector-effect:non-scaling-stroke}
+/* OFF = no light at all: no glow, no white edge light. Only a faint grey
+   outline so the black triangle is still visible on the black page. */
+html[data-theme="dark"] .tri-stage.cg-off .tri{filter:none !important}
+html[data-theme="dark"] .tri-stage.cg-off .tri polygon{stroke:rgba(255,255,255,.22);stroke-width:1px;stroke-linejoin:miter;vector-effect:non-scaling-stroke}
 
 /* ADDED: dark mode white light also flows on hover - a bright white wave runs around the rim */
 html[data-theme="dark"] .tri-stage.flowing:not(.prism-on):not(.cg-off) .tri-shade{opacity:1;filter:blur(10px)}

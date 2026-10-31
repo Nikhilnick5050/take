@@ -48,29 +48,18 @@ export function initPage() {
     var r = SIZE / 2;
     var g = ctx.createRadialGradient(r, r, 0, r, r, r);
 
-    if (!isDark()) return;   // light theme: flat #fafafa, exactly like the real page
-    // dark: soft halo just above the apex, a bit taller than wide, fading to 0
+    if (!isDark()) return;   // light theme: flat #fafafa, exactly like the reference
+    // dark: reference halo (alpha = 0.42 * exp(-r/140)), copied 1:1
     for (var i = 0; i <= 30; i++){
       var t = i / 30;
-      var a = 0.27 * Math.exp(-(t * r) / 120) * Math.pow(1 - t, 1.6);
+      var a = 0.42 * Math.exp(-(t * r) / 140) * Math.pow(1 - t, 1.6);
       if (i === 30) a = 0;
       g.addColorStop(t, 'rgba(255,255,255,' + a.toFixed(4) + ')');
     }
-    ctx.save();
-    ctx.translate(r, r); ctx.scale(0.86, 1); ctx.translate(-r, -r);
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.arc(r, r, r, 0, Math.PI * 2);
     ctx.fill();
-    ctx.restore();
-    // film grain: vercel.com's dark glow is dithered, not a smooth airbrush
-    var img = ctx.getImageData(0, 0, canvas.width, canvas.height), d = img.data;
-    for (var k = 3; k < d.length; k += 4){
-      if (d[k] === 0) continue;
-      var n = d[k] * (0.55 + Math.random() * 0.9);
-      d[k] = n > 255 ? 255 : n;
-    }
-    ctx.putImageData(img, 0, 0);
   }
 
   draw();
@@ -107,10 +96,9 @@ export function initPage() {
       stage.classList.toggle('prism-on');
       return;
     }
-    // DARK MODE: light -> rainbow -> off -> light
-    if (stage.classList.contains('cg-off')) { stage.classList.remove('cg-off'); }            // off -> light
-    else if (!stage.classList.contains('prism-on')) { stage.classList.add('prism-on'); }     // light -> rainbow
-    else { stage.classList.remove('prism-on'); stage.classList.add('cg-off'); }              // rainbow -> off
+    // DARK MODE: light <-> rainbow on every click (no off state; the light never goes out)
+    stage.classList.remove('cg-off');
+    stage.classList.toggle('prism-on');
   };
   // only the black triangle itself is the trigger
   var poly = stage.querySelector('.tri polygon');
