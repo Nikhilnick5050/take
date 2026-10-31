@@ -6,20 +6,11 @@ export function initPage() {
   if (started) return;
   started = true;
 
-/* 1. THEME ------------------------------------------------------- */
+/* 1. THEME -------------------------------------------------------
+   The light/dark switch is gone: the page is always dark, exactly like
+   vercel.com. Nothing to toggle, nothing saved in localStorage.        */
 (function(){
-  var root = document.documentElement;
-  var saved = null;
-  try { saved = localStorage.getItem('vercel-clone-theme'); } catch(e){}
-  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  root.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
-  document.getElementById('themeToggle').addEventListener('click', function(){
-    var st = document.getElementById('triStage');
-    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    if (st) { st.classList.remove('prism-on'); }   // every theme switch starts with the white light ON
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('vercel-clone-theme', next); } catch(e){}
-  });
+  document.documentElement.setAttribute('data-theme', 'dark');
 })();
 
 /* 2. GLOW — drawn on a canvas so the falloff is perfectly smooth

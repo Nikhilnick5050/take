@@ -139,20 +139,6 @@ html[data-theme="dark"] .btn-ghost:hover{background:#1a1a1a;border-color:#444}
 /* hero buttons: 40px tall, pill, 16px */
 .btn-lg{height:40px;padding:0 16px;font-size:16px;border-radius:9999px}
 
-/* ---------------- THEME TOGGLE ---------------- */
-.theme-toggle{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:32px;height:32px;padding:0;
-  background:transparent;border:1px solid var(--border);border-radius:6px;
-  color:var(--fg-muted);cursor:pointer;
-  transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease),background-color var(--dur) var(--ease);
-}
-.theme-toggle:hover{color:var(--fg);border-color:var(--border-strong);background:var(--nav-hover)}
-.theme-toggle svg{width:15px;height:15px;display:block}
-.theme-toggle .moon{display:none}
-html[data-theme="dark"] .theme-toggle .sun{display:none}
-html[data-theme="dark"] .theme-toggle .moon{display:block}
-
 /* ---------------- HERO ---------------- */
 /* section is 1232x836 at (24,64); inner row is 1232x728, centred */
 /* section fills the viewport below the header; the row takes the
@@ -283,8 +269,8 @@ html[data-theme="dark"] .tri-wrap::after{
 }
 html[data-theme="dark"] .tri-wrap::before{transform:translate(-2px,-4px) scale(1.035);filter:blur(5px)}
 html[data-theme="dark"] .tri-wrap::after{transform:translate(-6px,-14px) scale(1.12,1.18);filter:blur(26px)}
-html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::before{opacity:.95;animation:rimBreath 5s ease-in-out infinite}
-html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::after{opacity:.45;animation:bloomBreath 6.5s ease-in-out infinite}
+html[data-theme="dark"] .tri-stage:not(.prism-on) .tri-wrap::before{opacity:.95;animation:rimBreath 5s ease-in-out infinite}
+html[data-theme="dark"] .tri-stage:not(.prism-on) .tri-wrap::after{opacity:.45;animation:bloomBreath 6.5s ease-in-out infinite}
 @keyframes rimBreath{0%,100%{opacity:.95}50%{opacity:.78}}
 @keyframes bloomBreath{0%,100%{opacity:.45}50%{opacity:.32}}
 /* rainbow rim: a triangle-shaped colour layer, a bit bigger than the logo,
@@ -401,6 +387,112 @@ html[data-theme="dark"] .tri-stage.prism-on .tri{
   .section2{padding:64px 16px 80px}
 }
 
+/* ---------------- SITE FOOTER (rebuilt 1:1 from vercel.com) ----------------
+   Measured on vercel.com at 1440px:
+     footer ......... max-width 1448, margin auto, padding 40px 24px, font 14px
+     grid ........... 12 cols x 94px, gap 24px, every column spans 2 (=212px)
+     h2 ............. 14px / 20px, weight 500, margin 12px 0
+     links .......... 14px / 20px, weight 400, colour #4d4d4d, li padding 2px 0
+     bottom bar ..... flex, space-between, margin-top 32px, min-height 34px
+   -------------------------------------------------------------------------- */
+.vf{
+  max-width:1448px;margin:0 auto;
+  padding:40px 24px;
+  font-size:14px;line-height:20px;
+  color:var(--fg);
+  transition:color .4s ease;
+}
+.vf-inner{width:100%}
+
+.vf-cols{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  column-gap:24px;row-gap:24px;
+}
+.vf-cols + .vf-cols{margin-top:24px}
+.vf-col{grid-column:span 2;min-width:0}
+
+.vf-col h4{
+  font-size:14px;line-height:20px;font-weight:500;
+  color:var(--fg);margin:12px 0;
+  transition:color .4s ease;
+}
+.vf-col ul{list-style:none;margin:0;padding:0}
+.vf-col li{padding:2px 0;line-height:20px}
+.vf-col a{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:14px;line-height:20px;font-weight:400;
+  color:var(--fg-muted);text-decoration:none;
+  padding:2px 0;
+  transition:color .1s ease;
+}
+.vf-col a:hover{color:var(--fg)}
+
+.vf-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:20px;padding:0 8px;border-radius:9999px;
+  font-size:11px;line-height:20px;letter-spacing:.2px;font-weight:500;
+  background:rgba(0,0,0,.06);color:var(--fg);
+  transition:background-color .4s ease,color .4s ease;
+}
+html[data-theme="dark"] .vf-badge{background:rgba(255,255,255,.14)}
+
+/* bottom: triangle logo on its own line, then status left / icons right */
+.vf-bottom{margin-top:32px}
+.vf-logo{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:16px;height:14px;color:var(--fg);
+  transition:color .4s ease,opacity .15s ease;
+}
+.vf-logo svg{width:16px;height:14px;display:block}
+.vf-logo:hover{opacity:.7}
+
+.vf-status-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;margin-top:36px;min-height:34px;
+}
+.vf-status{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12px;line-height:20px;font-weight:500;
+  letter-spacing:0;text-transform:uppercase;
+  color:#0070f3;text-decoration:none;
+  transition:opacity .15s ease;
+}
+.vf-status:hover{opacity:.75}
+.vf-dot{
+  width:10px;height:10px;border-radius:9999px;background:#0070f3;
+  flex:0 0 auto;
+}
+@keyframes statusPulse{
+  0%{box-shadow:0 0 0 0 rgba(0,112,243,.45)}
+  70%{box-shadow:0 0 0 7px rgba(0,112,243,0)}
+  100%{box-shadow:0 0 0 0 rgba(0,112,243,0)}
+}
+
+.vf-actions{display:flex;align-items:center;gap:4px;margin-left:auto}
+.vf-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;padding:0;
+  background:transparent;border:0;border-radius:6px;
+  color:var(--fg-muted);cursor:pointer;
+  transition:color .15s ease,background-color .15s ease;
+}
+.vf-icon:hover{color:var(--fg);background:var(--nav-hover)}
+.vf-icon svg{width:16px;height:16px;display:block}
+
+@media (max-width:1279px){
+  .vf-cols{grid-template-columns:repeat(8,1fr)}
+}
+@media (max-width:1023px){
+  .vf-cols{grid-template-columns:repeat(6,1fr)}
+}
+@media (max-width:767px){
+  .vf{padding:32px 16px}
+  .vf-cols{grid-template-columns:repeat(4,1fr);column-gap:16px}
+  .vf-status-row{flex-wrap:wrap;gap:12px}
+}
+
 /* ---------------- DEMO / LEGAL FOOTER ---------------- */
 .demo-footer{
   width:100%;
@@ -480,14 +572,9 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
 }
 
 /* ===== ADDED (nothing above changed): OFF state of the 3-click cycle ===== */
-.tri-stage.cg-off .tri-prism,
-.tri-stage.cg-off .tri-shade,
-.tri-stage.cg-off .tri-glow{opacity:0 !important}
-html[data-theme="light"] .tri-stage.cg-off .tri{filter:none}
-html[data-theme="dark"] .tri-stage.cg-off .tri{filter:drop-shadow(0 0 1px rgba(255,255,255,.55))}
 
 /* ADDED: dark mode white light also flows on hover - a bright white wave runs around the rim */
-html[data-theme="dark"] .tri-stage.flowing:not(.prism-on):not(.cg-off) .tri-shade{opacity:1;filter:blur(10px)}
+html[data-theme="dark"] .tri-stage.flowing:not(.prism-on) .tri-shade{opacity:1;filter:blur(10px)}
 /* FIX: keep the rim WHITE whenever the rainbow is not switched on, so the 1s fade-out
    after hover never shows the rainbow gradient (that was the "rainbow flash" without a click) */
 html[data-theme="dark"] .tri-stage:not(.prism-on) .tri-shade::before{
