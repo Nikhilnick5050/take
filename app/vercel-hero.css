@@ -266,11 +266,27 @@ html[data-theme="light"] .tri-stage.prism-on .tri{filter:drop-shadow(0 0 3px rgb
           plus a wide, soft white halo.
    Click: crossfades (~1s) to a RAINBOW glow: pink left, violet top,
           blue right, green under the base. Click again: back to white.   */
-html[data-theme="dark"] .tri-glow{margin-top:calc(var(--glow-size) / -2 - 20px);transform:none !important;transition:opacity 1s ease}
+html[data-theme="dark"] .tri-glow{margin-top:calc(var(--glow-size) / -2 - 66px);transform:none !important;transition:opacity 1s ease}
+/* dark white light (fixed to match vercel.com): no hard uniform outline.
+   Light sits BEHIND the triangle: brightest at the apex, soft along the
+   slanted edges, almost nothing under the base, grainy halo above the
+   apex (canvas). Two blurred white triangles faded top -> bottom.     */
 html[data-theme="dark"] .tri{
-  filter:drop-shadow(0 0 2px rgba(255,255,255,.95)) drop-shadow(0 0 12px rgba(255,255,255,.8)) drop-shadow(0 0 40px rgba(255,255,255,.4));
+  filter:drop-shadow(0 0 .5px rgba(255,255,255,.55));
   transition:filter 1s ease;
 }
+html[data-theme="dark"] .tri-wrap::before,
+html[data-theme="dark"] .tri-wrap::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 222 222'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='.15' y1='0' x2='.85' y2='1'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='.5' stop-color='%23fff' stop-opacity='.5'/%3E%3Cstop offset='1' stop-color='%23fff' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='111,0 207,166 15,166' fill='url(%23g)'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  opacity:0;transition:opacity 1s ease;
+}
+html[data-theme="dark"] .tri-wrap::before{transform:translate(-2px,-4px) scale(1.035);filter:blur(5px)}
+html[data-theme="dark"] .tri-wrap::after{transform:translate(-6px,-14px) scale(1.12,1.18);filter:blur(26px)}
+html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::before{opacity:.95;animation:rimBreath 5s ease-in-out infinite}
+html[data-theme="dark"] .tri-stage:not(.prism-on):not(.cg-off) .tri-wrap::after{opacity:.45;animation:bloomBreath 6.5s ease-in-out infinite}
+@keyframes rimBreath{0%,100%{opacity:.95}50%{opacity:.78}}
+@keyframes bloomBreath{0%,100%{opacity:.45}50%{opacity:.32}}
 /* rainbow rim: a triangle-shaped colour layer, a bit bigger than the logo,
    blurred so the colours hug the three edges (pink left, violet top,
    blue right, faint green under the base) like vercel.com */
@@ -297,7 +313,7 @@ html[data-theme="dark"] .tri-stage.prism-on .tri-prism,
 html[data-theme="dark"] .tri-stage.prism-on .tri-shade{opacity:1}
 html[data-theme="dark"] .tri-stage.prism-on .tri-glow{opacity:0}
 html[data-theme="dark"] .tri-stage.prism-on .tri{
-  filter:drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 0 0 rgba(255,255,255,0)) drop-shadow(0 0 0 rgba(255,255,255,0));
+  filter:drop-shadow(0 0 1px rgba(255,255,255,.35));
 }
 
 /* right nav: 364 wide at x=892, items at x=900, 16/24, weight 450 */
@@ -469,3 +485,13 @@ html[data-theme="dark"] .cookie{box-shadow:0 8px 30px rgba(0,0,0,.6)}
 .tri-stage.cg-off .tri-glow{opacity:0 !important}
 html[data-theme="light"] .tri-stage.cg-off .tri{filter:none}
 html[data-theme="dark"] .tri-stage.cg-off .tri{filter:drop-shadow(0 0 1px rgba(255,255,255,.55))}
+
+/* ADDED: dark mode white light also flows on hover - a bright white wave runs around the rim */
+html[data-theme="dark"] .tri-stage.flowing:not(.prism-on):not(.cg-off) .tri-shade{opacity:1;filter:blur(10px)}
+html[data-theme="dark"] .tri-stage.flowing:not(.prism-on):not(.cg-off) .tri-shade::before{
+  background:conic-gradient(from var(--flow,0deg) at 130px 130px,rgba(255,255,255,.05) 0deg,rgba(255,255,255,.95) 50deg,rgba(255,255,255,.05) 120deg,rgba(255,255,255,.05) 180deg,rgba(255,255,255,.95) 230deg,rgba(255,255,255,.05) 300deg,rgba(255,255,255,.05) 360deg);
+}
+
+/* ADDED: stop sideways scrolling on smaller windows (the big glow was pushing the page wider, hiding the logo on the left) */
+html{overflow-x:clip}
+.hero{overflow-x:clip}
